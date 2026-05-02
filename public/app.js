@@ -327,7 +327,9 @@ async function initBookPage() {
   initReadingSettings();
 
   const contentArea = document.getElementById('book-content');
+  contentArea.classList.remove('fullscreen');
   if (book.type === 'pdf' && book.fileUrl) {
+    contentArea.classList.add('fullscreen');
     contentArea.innerHTML = `
       <div class="pdf-container">
         <iframe class="kindle-pdf" src="${book.fileUrl}" frameborder="0"></iframe>
