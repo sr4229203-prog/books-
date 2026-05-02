@@ -106,20 +106,89 @@ main {
   border: 1px solid rgba(66, 100, 255, 0.16);
 }
 
-.hero-visual {
-  position: relative;
-  min-height: 320px;
-  border-radius: 28px;
-  background: linear-gradient(180deg, #f6f8ff, #edf3ff);
-  overflow: hidden;
-  box-shadow: inset 0 0 0 1px rgba(79, 113, 255, 0.08);
+.hero-modern {
+  padding: 3rem 2.4rem;
 }
 
-.book-surface {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at top right, rgba(51, 102, 255, 0.15), transparent 24%),
-    radial-gradient(circle at bottom left, rgba(88, 104, 255, 0.12), transparent 26%);
+.hero-visual-advanced {
+  position: relative;
+  min-height: 420px;
+  padding: 1.5rem;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), #f4f8ff 100%);
+  border-radius: 32px;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 1rem;
+}
+
+.hero-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.65rem 1.4rem;
+  border-radius: 28px;
+  background: #fff;
+  border: 1px solid rgba(79, 113, 255, 0.1);
+  box-shadow: 0 16px 36px rgba(72, 95, 171, 0.08);
+}
+
+.hero-card-top {
+  background: linear-gradient(180deg, #ffffff 0%, #eef4ff 100%);
+}
+
+.hero-card-bottom {
+  background: linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
+}
+
+.hero-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  padding: 0.55rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(51, 102, 255, 0.12);
+  color: #1d3f91;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.hero-visual-advanced h3 {
+  margin: 0 0 0.85rem;
+  font-size: 1.2rem;
+  line-height: 1.3;
+}
+
+.hero-visual-advanced p {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.feature-section-advanced {
+  margin-top: 2.5rem;
+}
+
+.feature-card {
+  padding: 1.8rem;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(66, 100, 255, 0.13);
+  box-shadow: 0 20px 48px rgba(17, 43, 94, 0.07);
+}
+
+.content-preview {
+  margin-top: 2.8rem;
+}
+
+.book-grid-modern {
+  margin-top: 1.5rem;
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 }
 
 .hero-copy {
@@ -233,16 +302,66 @@ main {
   box-shadow: var(--shadow);
 }
 
-.page-panel {
-  grid-template-columns: 1fr;
+.admin-advanced {
+  grid-template-columns: 0.9fr 1.1fr;
+  align-items: start;
 }
 
-.panel-copy {
-  max-width: 520px;
+.admin-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
-.form-panel {
+.admin-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  background: rgba(51, 102, 255, 0.12);
+  color: #1d3f91;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  width: fit-content;
+}
+
+.admin-stats {
+  display: grid;
+  gap: 1rem;
+}
+
+.admin-stats div {
+  padding: 1rem 1.15rem;
+  border-radius: 20px;
+  background: rgba(240, 244, 255, 0.9);
+  border: 1px solid rgba(66, 100, 255, 0.08);
+}
+
+.admin-form-panel {
   min-width: 0;
+}
+
+.form-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr 1fr;
+}
+
+.form-grid label {
+  margin-bottom: 0;
+}
+
+.form-panel label {
+  display: grid;
+  gap: 0.65rem;
+}
+
+@media (max-width: 900px) {
+  .admin-advanced {
+    grid-template-columns: 1fr;
+  }
 }
 
 .dropzone {
@@ -357,10 +476,39 @@ textarea:focus {
 
 .book-grid {
   margin-top: 1.5rem;
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 }
 
 .book-card {
   padding: 1.8rem;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(70, 100, 255, 0.12);
+  box-shadow: 0 24px 48px rgba(44, 63, 123, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.book-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 28px 55px rgba(44, 63, 123, 0.14);
+}
+
+.book-meta {
+  margin: 0.25rem 0 0;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.book-description {
+  margin: 1rem 0 0;
+  color: var(--text-secondary);
+  line-height: 1.75;
+}
+
+.card-actions {
+  margin-top: 1.5rem;
 }
 
 .book-header-row {

@@ -15,47 +15,55 @@
     <nav id="main-nav"></nav>
   </header>
   <main>
-    <section class="hero">
+    <section class="hero hero-modern">
       <div class="hero-copy">
-        <p class="eyebrow">Discover, read, and publish</p>
-        <h2>Build your personal library and enjoy a premium reading experience.</h2>
-        <p>Sign in to browse books, open a reader-style book page, and manage uploads as an admin.
-          The platform is designed to feel calm, usable, and polished.</p>
+        <p class="eyebrow">Discover. Read. Publish.</p>
+        <h2>Build your personal library with a premium reading experience.</h2>
+        <p>Explore beautifully styled books, manage admin uploads, and enjoy a Kindle-inspired reader with themes, progress controls, and responsive layout.</p>
         <div class="hero-actions">
           <a class="button button-primary" href="/login.html">Get started</a>
           <a class="button button-secondary" href="/register.html">Create account</a>
         </div>
       </div>
-      <div class="hero-visual">
-        <div class="book-surface"></div>
-      </div>
-    </section>
-
-    <section class="feature-section">
-      <div class="feature-grid">
-        <article class="feature-card">
-          <h3>Beautiful reader flow</h3>
-          <p>Enjoy a clean, distraction-free layout built for reading and navigation.</p>
-        </article>
-        <article class="feature-card">
-          <h3>Admin-powered library</h3>
-          <p>Admins can upload books easily, and users can access content instantly.</p>
-        </article>
-        <article class="feature-card">
-          <h3>Responsive design</h3>
-          <p>Looks great on desktop and mobile with polished spacing and modern typography.</p>
-        </article>
-      </div>
-    </section>
-
-    <section>
-      <div class="section-heading">
-        <div>
-          <h3>Available books</h3>
-          <p>Choose a book and start reading in a smooth online viewer. PDF and Excel uploads are supported.</p>
+      <div class="hero-visual hero-visual-advanced">
+        <div class="hero-card hero-card-top">
+          <span class="hero-chip">Trending</span>
+          <h3>Learn design, publish books, and discover readers.</h3>
+          <p>Upload PDF or Excel files, or create text-based books directly in the dashboard.</p>
+        </div>
+        <div class="hero-card hero-card-bottom">
+          <span class="hero-chip">New Release</span>
+          <h3>Instant preview and elegant reader controls.</h3>
+          <p>Switch themes, resize text, and track reading progress seamlessly.</p>
         </div>
       </div>
-      <div id="books-list" class="book-grid"></div>
+    </section>
+
+    <section class="feature-section feature-section-advanced">
+      <div class="feature-grid">
+        <article class="feature-card">
+          <h3>Elegant reading flow</h3>
+          <p>Polished layouts, soft shadows, and premium readability for long sessions.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Secure file backup</h3>
+          <p>Every upload is stored safely in both live and backup storage for peace of mind.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Smart admin experience</h3>
+          <p>Modern upload controls, drag-and-drop support, and real-time feedback on uploads.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="content-preview">
+      <div class="section-heading">
+        <div>
+          <h3>Library snapshots</h3>
+          <p>Browse the latest titles in a card-based view designed for easy discovery.</p>
+        </div>
+      </div>
+      <div id="books-list" class="book-grid book-grid-modern"></div>
     </section>
   </main>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

@@ -70,12 +70,16 @@ async function loadBooks() {
     card.className = 'book-card';
     card.innerHTML = `
       <div class="book-header-row">
-        <h3>${book.title}</h3>
+        <div>
+          <h3>${book.title}</h3>
+          <p class="book-meta">${book.author}</p>
+        </div>
         <span class="chip">${book.type ? book.type.toUpperCase() : 'TEXT'}</span>
       </div>
-      <p><strong>Author:</strong> ${book.author}</p>
-      <p>${book.description || 'No description provided.'}</p>
-      <button data-id="${book.id}">Read book</button>
+      <p class="book-description">${book.description || 'No description provided.'}</p>
+      <div class="card-actions">
+        <button class="button button-primary" data-id="${book.id}">Read book</button>
+      </div>
     `;
     card.querySelector('button').addEventListener('click', () => {
       window.location.href = `/book.html?id=${book.id}`;
