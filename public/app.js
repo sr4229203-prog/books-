@@ -362,11 +362,37 @@ function initReadingSettings() {
   const settingsPanel = document.getElementById('reading-settings');
   const backBtn = document.getElementById('back-btn');
   const tocBtn = document.getElementById('toc-btn');
+  const fullscreenBtn = document.getElementById('fullscreen-btn');
 
   // Toggle settings panel
   settingsBtn.addEventListener('click', () => {
     settingsPanel.style.display = settingsPanel.style.display === 'none' ? 'block' : 'none';
   });
+
+  // Fullscreen toggle
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', async () => {
+      if (!document.fullscreenElement) {
+        try {
+          await document.documentElement.requestFullscreen?.();
+          fullscreenBtn.textContent = '⤫';
+        } catch (err) {
+          console.warn('Fullscreen request failed', err);
+        }
+      } else {
+        try {
+          await document.exitFullscreen?.();
+          fullscreenBtn.textContent = '⛶';
+        } catch (err) {
+          console.warn('Exit fullscreen failed', err);
+        }
+      }
+    });
+
+    document.addEventListener('fullscreenchange', () => {
+      fullscreenBtn.textContent = document.fullscreenElement ? '⤫' : '⛶';
+    });
+  }
 
   // Back button
   backBtn.addEventListener('click', () => {
