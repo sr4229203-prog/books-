@@ -9,6 +9,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 const dataDir = path.join(__dirname, 'data');
 const uploadsDir = path.join(__dirname, 'uploads');
+const backupDir = path.join(__dirname, 'backup');
 const booksFile = path.join(dataDir, 'books.json');
 const usersFile = path.join(dataDir, 'users.json');
 
@@ -43,6 +44,10 @@ function ensureDataFiles() {
 
   if (!fs.existsSync(uploadsDir)) {
     fs.mkdirSync(uploadsDir);
+  }
+
+  if (!fs.existsSync(backupDir)) {
+    fs.mkdirSync(backupDir);
   }
 
   if (!fs.existsSync(booksFile)) {
@@ -218,6 +223,13 @@ app.post('/api/books', requireAdmin, upload.single('file'), (req, res) => {
   };
   books.push(newBook);
   writeJson(booksFile, books);
+
+  // Backup the uploaded file
+  if (file) {
+    const backupPath = path.join(backupDir, file.filename);
+    fs.copyFileSync(file.path, backupPath);
+  }
+
   res.json({ success: true, book: newBook });
 });
 

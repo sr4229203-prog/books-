@@ -6,13 +6,21 @@ const api = {
   books: '/api/books'
 };
 
-async function request(path, options) {
-  const response = await fetch(path, options);
-  const body = await response.json().catch(() => ({}));
-  if (!response.ok) {
-    throw new Error(body.error || 'Request failed');
+async function request(path, options = {}) {
+  try {
+    const config = {
+      ...options,
+      url: path,
+      headers: {
+        ...options.headers,
+      },
+    };
+    const response = await axios(config);
+    return response.data;
+  } catch (error) {
+    const message = error.response?.data?.error || error.message || 'Request failed';
+    throw new Error(message);
   }
-  return body;
 }
 
 async function loadAuthStatus() {
@@ -171,11 +179,10 @@ async function initLogin() {
     try {
       await request(api.login, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
+        data: {
           username: formData.get('username'),
           password: formData.get('password')
-        })
+        }
       });
       navigateTo('/');
     } catch (err) {
@@ -194,11 +201,10 @@ async function initRegister() {
     try {
       await request(api.register, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
+        data: {
           username: formData.get('username'),
           password: formData.get('password')
-        })
+        }
       });
       navigateTo('/');
     } catch (err) {
@@ -260,16 +266,33 @@ async function initAdmin() {
     error.textContent = '';
     success.textContent = '';
     const submitData = new FormData(form);
+    const progressBar = document.getElementById('upload-progress');
+    const progressFill = progressBar.querySelector('.progress-fill');
+    const submitBtn = document.getElementById('submit-btn');
+
+    progressBar.style.display = 'block';
+    progressFill.style.width = '0%';
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Uploading...';
+
     try {
       await request(api.books, {
         method: 'POST',
-        body: submitData
+        data: submitData,
+        onUploadProgress: (progressEvent) => {
+          const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          progressFill.style.width = `${percent}%`;
+        }
       });
-      success.textContent = 'Book uploaded successfully.';
+      success.textContent = 'Book uploaded successfully and backed up!';
       form.reset();
       updateFileName();
     } catch (err) {
       error.textContent = err.message;
+    } finally {
+      progressBar.style.display = 'none';
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Publish Book';
     }
   });
 }

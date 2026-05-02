@@ -21,25 +21,30 @@
         <p>Upload a PDF or Excel file, or enter text content directly to create a professional reading item.</p>
       </div>
       <form id="book-form" class="form-panel">
-        <label>Title<input type="text" name="title" required /></label>
-        <label>Author<input type="text" name="author" required /></label>
-        <label>Description<textarea name="description" rows="3"></textarea></label>
+        <label>Title<input type="text" name="title" required placeholder="Enter book title" /></label>
+        <label>Author<input type="text" name="author" required placeholder="Enter author name" /></label>
+        <label>Description<textarea name="description" rows="3" placeholder="Brief description of the book"></textarea></label>
         <div class="dropzone" id="file-dropzone">
           <input type="file" name="file" id="file-input" accept=".pdf,.xls,.xlsx" />
           <div class="dropzone-content">
+            <div class="dropzone-icon">📁</div>
             <p class="dropzone-title">Drag & drop PDF or Excel here</p>
             <p class="dropzone-subtitle">or click to choose a file</p>
             <p class="dropzone-filename" id="dropzone-filename">No file selected</p>
           </div>
         </div>
-        <label>Text content<textarea name="content" rows="10" placeholder="Leave this empty if uploading a PDF or Excel file"></textarea></label>
-        <p class="form-note">If you upload a file, the file will be used for reading. Otherwise plain text content will create a standard reader page.</p>
-        <button type="submit">Publish Book</button>
+        <label>Text content<textarea name="content" rows="10" placeholder="Leave this empty if uploading a PDF or Excel file. Enter plain text content here."></textarea></label>
+        <p class="form-note">💡 Tip: If you upload a file, the file will be used for reading. Otherwise, plain text content will create a standard reader page. All uploaded files are automatically backed up.</p>
+        <button type="submit" id="submit-btn">Publish Book</button>
+        <div id="upload-progress" class="progress-bar" style="display: none;">
+          <div class="progress-fill"></div>
+        </div>
         <p id="book-error" class="error"></p>
         <p id="book-success" class="success"></p>
       </form>
     </section>
   </main>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="/app.js"></script>
 </body>
 </html>
