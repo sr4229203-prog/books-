@@ -104,7 +104,7 @@ function renderExcelContent(data) {
         )
         .join('');
       return `
-        <div class="excel-sheet">
+        <div class="excel-sheet kindle-excel">
           <h3>${sheet.name}</h3>
           <div class="excel-scroll">
             <table>
@@ -300,19 +300,178 @@ async function initAdmin() {
 async function initBookPage() {
   try {
     const auth = await loadAuthStatus();
-    buildNav(auth.user);
-  } catch {
-    // show page even if not logged in, but reading requires login to navigate back.
-  }
-  const logoutLink = document.getElementById('logout-link');
-  if (logoutLink) {
-    logoutLink.addEventListener('click', async (event) => {
-      event.preventDefault();
-      await request(api.logout, { method: 'POST' });
+    if (!auth.user) {
       navigateTo('/login.html');
-    });
+      return;
+    }
+  } catch {
+    navigateTo('/login.html');
+    return;
   }
-  await loadBookDetails();
+
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('id');
+  if (!id) {
+    document.getElementById('book-content').textContent = 'Book ID missing.';
+    return;
+  }
+
+  const book = await request(`${api.books}/${id}`);
+  document.getElementById('book-title').textContent = book.title;
+
+  // Initialize reading settings
+  initReadingSettings();
+
+  const contentArea = document.getElementById('book-content');
+  if (book.type === 'pdf' && book.fileUrl) {
+    contentArea.innerHTML = `
+      <div class="pdf-container">
+        <iframe class="kindle-pdf" src="${book.fileUrl}" frameborder="0"></iframe>
+        <p class="pdf-note">📖 PDF opened in Kindle-style viewer. Use browser controls for navigation.</p>
+      </div>
+    `;
+    updateProgress(100); // PDFs don't have scroll progress
+    return;
+  }
+
+  if (book.type === 'excel' && book.fileUrl) {
+    contentArea.innerHTML = `<p>Loading Excel preview...</p>`;
+    try {
+      const data = await request(`${api.books}/${id}/data`);
+      contentArea.innerHTML = renderExcelContent(data);
+      updateProgress(100);
+    } catch (err) {
+      contentArea.innerHTML = `<p class="error">Unable to load Excel data. <a href="${book.fileUrl}" target="_blank">Download file</a></p>`;
+    }
+    return;
+  }
+
+  // Handle text content
+  contentArea.innerHTML = book.content || 'No content available for this book.';
+  initTextReader();
+}
+
+function initReadingSettings() {
+  const settingsBtn = document.getElementById('settings-btn');
+  const settingsPanel = document.getElementById('reading-settings');
+  const backBtn = document.getElementById('back-btn');
+  const tocBtn = document.getElementById('toc-btn');
+
+  // Toggle settings panel
+  settingsBtn.addEventListener('click', () => {
+    settingsPanel.style.display = settingsPanel.style.display === 'none' ? 'block' : 'none';
+  });
+
+  // Back button
+  backBtn.addEventListener('click', () => {
+    window.location.href = '/';
+  });
+
+  // TOC button (placeholder for now)
+  tocBtn.addEventListener('click', () => {
+    alert('Table of Contents feature coming soon!');
+  });
+
+  // Font size controls
+  document.querySelectorAll('.size-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const size = btn.dataset.size;
+      document.body.classList.remove('font-small', 'font-large');
+      if (size !== 'medium') {
+        document.body.classList.add(`font-${size}`);
+      }
+    });
+  });
+
+  // Theme controls
+  document.querySelectorAll('.theme-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const theme = btn.dataset.theme;
+      document.body.classList.remove('theme-light', 'theme-sepia', 'theme-dark');
+      document.body.classList.add(`theme-${theme}`);
+    });
+  });
+
+  // Line spacing controls
+  document.querySelectorAll('.spacing-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.spacing-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const spacing = btn.dataset.spacing;
+      document.body.classList.remove('spacing-normal', 'spacing-wide');
+      if (spacing !== 'normal') {
+        document.body.classList.add(`spacing-${spacing}`);
+      }
+    });
+  });
+}
+
+function initTextReader() {
+  const contentWrapper = document.querySelector('.book-content-wrapper');
+  const header = document.getElementById('reader-header');
+
+  // Auto-hide header on scroll
+  let scrollTimer;
+  contentWrapper.addEventListener('scroll', () => {
+    header.classList.remove('hidden');
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(() => {
+      if (contentWrapper.scrollTop > 100) {
+        header.classList.add('hidden');
+      }
+    }, 2000);
+  });
+
+  // Show header on mouse move near top
+  document.addEventListener('mousemove', (e) => {
+    if (e.clientY < 100) {
+      header.classList.remove('hidden');
+    }
+  });
+
+  // Update progress on scroll
+  contentWrapper.addEventListener('scroll', updateScrollProgress);
+
+  // Navigation buttons
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+
+  prevBtn.addEventListener('click', () => {
+    const scrollAmount = contentWrapper.clientHeight * 0.8;
+    contentWrapper.scrollBy({ top: -scrollAmount, behavior: 'smooth' });
+  });
+
+  nextBtn.addEventListener('click', () => {
+    const scrollAmount = contentWrapper.clientHeight * 0.8;
+    contentWrapper.scrollBy({ top: scrollAmount, behavior: 'smooth' });
+  });
+}
+
+function updateScrollProgress() {
+  const contentWrapper = document.querySelector('.book-content-wrapper');
+  const scrollTop = contentWrapper.scrollTop;
+  const scrollHeight = contentWrapper.scrollHeight - contentWrapper.clientHeight;
+  const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+  updateProgress(progress);
+}
+
+function updateProgress(percent) {
+  const progressFill = document.getElementById('progress-fill');
+  const currentLocation = document.getElementById('current-location');
+
+  if (progressFill) {
+    progressFill.style.width = `${percent}%`;
+  }
+  if (currentLocation) {
+    currentLocation.textContent = `${Math.round(percent)}%`;
+  }
 }
 
 const path = window.location.pathname;

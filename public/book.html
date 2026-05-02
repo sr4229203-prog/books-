@@ -6,23 +6,74 @@
   <title>Read Book - BookHub</title>
   <link rel="stylesheet" href="/styles.css" />
 </head>
-<body>
-  <header>
-    <div class="header-brand">
-      <p class="eyebrow">Reader mode</p>
-      <h1 id="book-title">Read Book</h1>
-    </div>
-    <nav><a href="/">Home</a> | <a href="#" id="logout-link">Logout</a></nav>
-  </header>
-  <main>
-    <section class="book-header-panel">
-      <div id="book-details" class="book-card"></div>
-      <div class="reader-status">
-        <p>Tip: Use the reader frame below for PDF viewing or the generated table view for Excel files.</p>
+<body class="reader-body">
+  <div class="reader-container">
+    <!-- Minimal Header -->
+    <header class="reader-header" id="reader-header">
+      <div class="reader-header-content">
+        <button class="reader-nav-btn" id="back-btn">← Back</button>
+        <h1 id="book-title" class="reader-title">Read Book</h1>
+        <div class="reader-controls">
+          <button class="reader-btn" id="settings-btn">⚙️</button>
+          <button class="reader-btn" id="toc-btn">📑</button>
+        </div>
       </div>
-    </section>
-    <section class="book-content" id="book-content"></section>
-  </main>
+    </header>
+
+    <!-- Reading Settings Panel -->
+    <div class="reading-settings" id="reading-settings" style="display: none;">
+      <div class="settings-content">
+        <h3>Reading Settings</h3>
+        <div class="setting-group">
+          <label>Font Size</label>
+          <div class="font-size-controls">
+            <button class="size-btn" data-size="small">A</button>
+            <button class="size-btn active" data-size="medium">A</button>
+            <button class="size-btn" data-size="large">A</button>
+          </div>
+        </div>
+        <div class="setting-group">
+          <label>Theme</label>
+          <div class="theme-controls">
+            <button class="theme-btn active" data-theme="light">☀️ Light</button>
+            <button class="theme-btn" data-theme="sepia">📜 Sepia</button>
+            <button class="theme-btn" data-theme="dark">🌙 Dark</button>
+          </div>
+        </div>
+        <div class="setting-group">
+          <label>Line Spacing</label>
+          <div class="spacing-controls">
+            <button class="spacing-btn active" data-spacing="normal">Normal</button>
+            <button class="spacing-btn" data-spacing="wide">Wide</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Reading Area -->
+    <main class="reader-main">
+      <div class="book-content-wrapper">
+        <div id="book-content" class="book-content kindle-text"></div>
+      </div>
+    </main>
+
+    <!-- Reading Footer -->
+    <footer class="reader-footer">
+      <div class="reading-progress">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <div class="progress-text">
+          <span id="current-location">0%</span>
+        </div>
+      </div>
+      <div class="reading-nav">
+        <button class="nav-btn" id="prev-btn">‹ Previous</button>
+        <button class="nav-btn" id="next-btn">Next ›</button>
+      </div>
+    </footer>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="/app.js"></script>
 </body>

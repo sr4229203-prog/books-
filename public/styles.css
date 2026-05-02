@@ -500,3 +500,408 @@ textarea:focus {
   from { opacity: 0; transform: translateY(-10px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+/* Kindle-like Reader Styles */
+.reader-body {
+  margin: 0;
+  padding: 0;
+  background: #f5f5f5;
+  font-family: 'Amazon Ember', 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  overflow-x: hidden;
+}
+
+.reader-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: #fff;
+  position: relative;
+}
+
+/* Reader Header */
+.reader-header {
+  background: #fff;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 0.75rem 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+
+.reader-header.hidden {
+  transform: translateY(-100%);
+}
+
+.reader-header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.reader-nav-btn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: #007185;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+.reader-nav-btn:hover {
+  background: #f0f0f0;
+}
+
+.reader-title {
+  font-size: 1.1rem;
+  font-weight: 400;
+  margin: 0;
+  flex: 1;
+  text-align: center;
+  color: #333;
+}
+
+.reader-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.reader-btn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+.reader-btn:hover {
+  background: #f0f0f0;
+}
+
+/* Reading Settings */
+.reading-settings {
+  background: #fff;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.settings-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.settings-content h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.setting-group {
+  margin-bottom: 1.5rem;
+}
+
+.setting-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #555;
+}
+
+.font-size-controls,
+.theme-controls,
+.spacing-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.size-btn,
+.theme-btn,
+.spacing-btn {
+  padding: 0.5rem 1rem;
+  border: 2px solid #ddd;
+  background: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.size-btn.active,
+.theme-btn.active,
+.spacing-btn.active {
+  border-color: #007185;
+  background: #007185;
+  color: #fff;
+}
+
+.size-btn:hover,
+.theme-btn:hover,
+.spacing-btn:hover {
+  border-color: #007185;
+}
+
+/* Reader Main Content */
+.reader-main {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  background: #fff;
+}
+
+.book-content-wrapper {
+  max-width: 800px;
+  width: 100%;
+  padding: 2rem;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.kindle-text {
+  font-family: 'Amazon Ember', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #333;
+  text-align: left;
+  max-width: none;
+  margin: 0;
+}
+
+.kindle-text p {
+  margin: 0 0 1.2em 0;
+  text-indent: 1.5em;
+}
+
+.kindle-text p:first-child {
+  text-indent: 0;
+}
+
+.kindle-text h1,
+.kindle-text h2,
+.kindle-text h3 {
+  margin: 2em 0 1em 0;
+  font-weight: 600;
+  color: #333;
+  text-indent: 0;
+}
+
+.kindle-text h1 { font-size: 1.8rem; }
+.kindle-text h2 { font-size: 1.5rem; }
+.kindle-text h3 { font-size: 1.3rem; }
+
+/* Reader Footer */
+.reader-footer {
+  background: #fff;
+  border-top: 1px solid #e0e0e0;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.reading-progress {
+  flex: 1;
+  margin-right: 2rem;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 4px;
+  background: #e0e0e0;
+  border-radius: 2px;
+  margin-bottom: 0.5rem;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #007185;
+  border-radius: 2px;
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  font-size: 0.8rem;
+  color: #666;
+  text-align: center;
+}
+
+.reading-nav {
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-btn {
+  padding: 0.5rem 1rem;
+  background: #007185;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.2s ease;
+}
+
+.nav-btn:hover {
+  background: #005a6b;
+}
+
+.nav-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* Kindle Themes */
+.reader-body.theme-sepia {
+  background: #f4ecd8;
+}
+
+.reader-body.theme-sepia .reader-container {
+  background: #f4ecd8;
+}
+
+.reader-body.theme-sepia .reader-header,
+.reader-body.theme-sepia .reading-settings,
+.reader-body.theme-sepia .reader-footer {
+  background: #f4ecd8;
+  border-color: #d4c4a8;
+}
+
+.reader-body.theme-sepia .kindle-text {
+  color: #5c4b37;
+}
+
+.reader-body.theme-dark {
+  background: #1a1a1a;
+}
+
+.reader-body.theme-dark .reader-container {
+  background: #1a1a1a;
+}
+
+.reader-body.theme-dark .reader-header,
+.reader-body.theme-dark .reading-settings,
+.reader-body.theme-dark .reader-footer {
+  background: #2a2a2a;
+  border-color: #404040;
+  color: #e0e0e0;
+}
+
+.reader-body.theme-dark .kindle-text {
+  color: #e0e0e0;
+}
+
+.reader-body.theme-dark .reader-title,
+.reader-body.theme-dark .settings-content h3 {
+  color: #e0e0e0;
+}
+
+.reader-body.theme-dark .setting-group label {
+  color: #ccc;
+}
+
+/* Font Sizes */
+.reader-body.font-small .kindle-text {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.reader-body.font-large .kindle-text {
+  font-size: 1.3rem;
+  line-height: 1.7;
+}
+
+.reader-body.font-small .kindle-text h1 { font-size: 1.6rem; }
+.reader-body.font-small .kindle-text h2 { font-size: 1.3rem; }
+.reader-body.font-small .kindle-text h3 { font-size: 1.1rem; }
+
+.reader-body.font-large .kindle-text h1 { font-size: 2rem; }
+.reader-body.font-large .kindle-text h2 { font-size: 1.7rem; }
+.reader-body.font-large .kindle-text h3 { font-size: 1.5rem; }
+
+/* Line Spacing */
+.reader-body.spacing-wide .kindle-text p {
+  margin-bottom: 1.5em;
+}
+
+.kindle-excel {
+  margin-bottom: 2rem;
+}
+
+.kindle-excel h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.pdf-container {
+  text-align: center;
+}
+
+.kindle-pdf {
+  width: 100%;
+  height: 80vh;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.pdf-note {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #666;
+  font-style: italic;
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+  .book-content-wrapper {
+    padding: 1rem;
+  }
+
+  .reader-footer {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0.75rem;
+  }
+
+  .reading-progress {
+    margin-right: 0;
+  }
+
+  .reading-nav {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 640px) {
+  .reader-header-content {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .reader-title {
+    order: -1;
+    text-align: center;
+  }
+
+  .reader-controls {
+    position: absolute;
+    top: 0.75rem;
+    right: 1rem;
+  }
+}
