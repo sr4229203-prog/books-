@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard - BookHub</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header>
+    <div class="header-brand">
+      <p class="eyebrow">Admin dashboard</p>
+      <h1>Upload new content</h1>
+    </div>
+    <nav><a href="/">Home</a> | <a href="#" id="logout-link">Logout</a></nav>
+  </header>
+  <main>
+    <section class="page-panel admin-panel">
+      <div class="panel-copy">
+        <h2>Publish a new book</h2>
+        <p>Upload a PDF or Excel file, or enter text content directly to create a professional reading item.</p>
+      </div>
+      <form id="book-form" class="form-panel">
+        <label>Title<input type="text" name="title" required /></label>
+        <label>Author<input type="text" name="author" required /></label>
+        <label>Description<textarea name="description" rows="3"></textarea></label>
+        <div class="dropzone" id="file-dropzone">
+          <input type="file" name="file" id="file-input" accept=".pdf,.xls,.xlsx" />
+          <div class="dropzone-content">
+            <p class="dropzone-title">Drag & drop PDF or Excel here</p>
+            <p class="dropzone-subtitle">or click to choose a file</p>
+            <p class="dropzone-filename" id="dropzone-filename">No file selected</p>
+          </div>
+        </div>
+        <label>Text content<textarea name="content" rows="10" placeholder="Leave this empty if uploading a PDF or Excel file"></textarea></label>
+        <p class="form-note">If you upload a file, the file will be used for reading. Otherwise plain text content will create a standard reader page.</p>
+        <button type="submit">Publish Book</button>
+        <p id="book-error" class="error"></p>
+        <p id="book-success" class="success"></p>
+      </form>
+    </section>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>

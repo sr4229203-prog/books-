@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BookHub Reader</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header>
+    <div class="header-brand">
+      <p class="eyebrow">BookHub</p>
+      <h1>Elegant reading for modern readers.</h1>
+    </div>
+    <nav id="main-nav"></nav>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Discover, read, and publish</p>
+        <h2>Build your personal library and enjoy a premium reading experience.</h2>
+        <p>Sign in to browse books, open a reader-style book page, and manage uploads as an admin.
+          The platform is designed to feel calm, usable, and polished.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="/login.html">Get started</a>
+          <a class="button button-secondary" href="/register.html">Create account</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="book-surface"></div>
+      </div>
+    </section>
+
+    <section class="feature-section">
+      <div class="feature-grid">
+        <article class="feature-card">
+          <h3>Beautiful reader flow</h3>
+          <p>Enjoy a clean, distraction-free layout built for reading and navigation.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Admin-powered library</h3>
+          <p>Admins can upload books easily, and users can access content instantly.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Responsive design</h3>
+          <p>Looks great on desktop and mobile with polished spacing and modern typography.</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-heading">
+        <div>
+          <h3>Available books</h3>
+          <p>Choose a book and start reading in a smooth online viewer. PDF and Excel uploads are supported.</p>
+        </div>
+      </div>
+      <div id="books-list" class="book-grid"></div>
+    </section>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>

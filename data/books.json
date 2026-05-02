@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "title": "Sample Book",
+    "author": "Admin",
+    "description": "Welcome to the book reader app. Use the admin page to add more books.",
+    "type": "text",
+    "content": "This is a sample book page. Add more books from the admin section and read them here.\n\nYou can upload books with a title, author, description, and the full content. Users can then click any book to open it and read it like an online reader."
+  },
+  {
+    "id": 2,
+    "title": "ds",
+    "author": "fsdsa",
+    "description": "afdd",
+    "type": "text",
+    "content": "dsa"
+  }
+]

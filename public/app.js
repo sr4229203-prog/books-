@@ -1,0 +1,306 @@
+const api = {
+  status: '/api/auth/status',
+  login: '/api/auth/login',
+  register: '/api/auth/register',
+  logout: '/api/auth/logout',
+  books: '/api/books'
+};
+
+async function request(path, options) {
+  const response = await fetch(path, options);
+  const body = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    throw new Error(body.error || 'Request failed');
+  }
+  return body;
+}
+
+async function loadAuthStatus() {
+  return request(api.status);
+}
+
+function navigateTo(path) {
+  window.location.href = path;
+}
+
+function buildNav(user) {
+  const nav = document.getElementById('main-nav');
+  if (!nav) return;
+  nav.innerHTML = '';
+  if (user) {
+    const home = document.createElement('a');
+    home.href = '/';
+    home.textContent = 'Home';
+    nav.appendChild(home);
+    if (user.role === 'admin') {
+      const admin = document.createElement('a');
+      admin.href = '/admin.html';
+      admin.textContent = 'Admin';
+      nav.appendChild(admin);
+    }
+    const logout = document.createElement('a');
+    logout.href = '#';
+    logout.textContent = 'Logout';
+    logout.addEventListener('click', async (event) => {
+      event.preventDefault();
+      await request(api.logout, { method: 'POST' });
+      navigateTo('/login.html');
+    });
+    nav.appendChild(logout);
+  } else {
+    nav.innerHTML = '<a href="/login.html">Login</a> | <a href="/register.html">Register</a>';
+  }
+}
+
+async function loadBooks() {
+  const books = await request(api.books);
+  const container = document.getElementById('books-list');
+  if (!container) return;
+  container.innerHTML = '';
+  books.forEach((book) => {
+    const card = document.createElement('article');
+    card.className = 'book-card';
+    card.innerHTML = `
+      <div class="book-header-row">
+        <h3>${book.title}</h3>
+        <span class="chip">${book.type ? book.type.toUpperCase() : 'TEXT'}</span>
+      </div>
+      <p><strong>Author:</strong> ${book.author}</p>
+      <p>${book.description || 'No description provided.'}</p>
+      <button data-id="${book.id}">Read book</button>
+    `;
+    card.querySelector('button').addEventListener('click', () => {
+      window.location.href = `/book.html?id=${book.id}`;
+    });
+    container.appendChild(card);
+  });
+}
+
+function renderExcelContent(data) {
+  if (!data || !Array.isArray(data.sheets)) {
+    return '<p>No Excel content available.</p>';
+  }
+  return data.sheets
+    .map((sheet) => {
+      const rows = sheet.rows || [];
+      if (!rows.length) return `<div class="excel-sheet"><h3>${sheet.name}</h3><p>No rows found.</p></div>`;
+      const tableRows = rows
+        .map(
+          (row, rowIndex) => `
+            <tr>
+              ${row
+                .map((cell) => `<td>${cell ?? ''}</td>`)
+                .join('')}
+            </tr>
+          `
+        )
+        .join('');
+      return `
+        <div class="excel-sheet">
+          <h3>${sheet.name}</h3>
+          <div class="excel-scroll">
+            <table>
+              <tbody>${tableRows}</tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    })
+    .join('');
+}
+
+async function loadBookDetails() {
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('id');
+  if (!id) {
+    document.getElementById('book-details').textContent = 'Book ID missing.';
+    return;
+  }
+  const book = await request(`${api.books}/${id}`);
+  document.getElementById('book-title').textContent = book.title;
+  document.getElementById('book-details').innerHTML = `
+    <div class="book-card">
+      <h2>${book.title}</h2>
+      <p><strong>Author:</strong> ${book.author}</p>
+      <p>${book.description || 'No description provided.'}</p>
+    </div>
+  `;
+
+  const contentArea = document.getElementById('book-content');
+  if (book.type === 'pdf' && book.fileUrl) {
+    contentArea.innerHTML = `
+      <div class="reader-frame-card">
+        <iframe class="reader-iframe" src="${book.fileUrl}"></iframe>
+        <p class="reader-note">PDF viewer loaded. Use browser controls to navigate pages and zoom.</p>
+      </div>
+    `;
+    return;
+  }
+
+  if (book.type === 'excel' && book.fileUrl) {
+    contentArea.innerHTML = `<p>Loading Excel preview...</p>`;
+    try {
+      const data = await request(`${api.books}/${id}/data`);
+      contentArea.innerHTML = renderExcelContent(data);
+    } catch (err) {
+      contentArea.innerHTML = `<p class="error">Unable to load Excel data. <a href="${book.fileUrl}" target="_blank">Download file</a></p>`;
+    }
+    return;
+  }
+
+  contentArea.textContent = book.content || 'No content available for this book.';
+}
+
+async function initIndex() {
+  try {
+    const auth = await loadAuthStatus();
+    buildNav(auth.user);
+  } catch (error) {
+    console.error(error);
+  }
+  await loadBooks();
+}
+
+async function initLogin() {
+  const form = document.getElementById('login-form');
+  const error = document.getElementById('login-error');
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    error.textContent = '';
+    const formData = new FormData(form);
+    try {
+      await request(api.login, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username: formData.get('username'),
+          password: formData.get('password')
+        })
+      });
+      navigateTo('/');
+    } catch (err) {
+      error.textContent = err.message;
+    }
+  });
+}
+
+async function initRegister() {
+  const form = document.getElementById('register-form');
+  const error = document.getElementById('register-error');
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    error.textContent = '';
+    const formData = new FormData(form);
+    try {
+      await request(api.register, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username: formData.get('username'),
+          password: formData.get('password')
+        })
+      });
+      navigateTo('/');
+    } catch (err) {
+      error.textContent = err.message;
+    }
+  });
+}
+
+async function initAdmin() {
+  try {
+    const auth = await loadAuthStatus();
+    if (!auth.user || auth.user.role !== 'admin') {
+      navigateTo('/login.html');
+      return;
+    }
+    buildNav(auth.user);
+  } catch (error) {
+    console.error(error);
+    navigateTo('/login.html');
+    return;
+  }
+
+  const form = document.getElementById('book-form');
+  const error = document.getElementById('book-error');
+  const success = document.getElementById('book-success');
+  const fileInput = document.getElementById('file-input');
+  const dropzone = document.getElementById('file-dropzone');
+  const fileNameLabel = document.getElementById('dropzone-filename');
+
+  function updateFileName() {
+    const file = fileInput.files && fileInput.files[0];
+    fileNameLabel.textContent = file ? file.name : 'No file selected';
+  }
+
+  function highlightDropzone(active) {
+    dropzone.classList.toggle('dropzone-active', active);
+  }
+
+  dropzone.addEventListener('click', () => fileInput.click());
+  dropzone.addEventListener('dragover', (event) => {
+    event.preventDefault();
+    highlightDropzone(true);
+  });
+  dropzone.addEventListener('dragleave', () => highlightDropzone(false));
+  dropzone.addEventListener('drop', (event) => {
+    event.preventDefault();
+    highlightDropzone(false);
+    const droppedFiles = event.dataTransfer.files;
+    if (droppedFiles.length) {
+      fileInput.files = droppedFiles;
+      updateFileName();
+    }
+  });
+
+  fileInput.addEventListener('change', updateFileName);
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    error.textContent = '';
+    success.textContent = '';
+    const submitData = new FormData(form);
+    try {
+      await request(api.books, {
+        method: 'POST',
+        body: submitData
+      });
+      success.textContent = 'Book uploaded successfully.';
+      form.reset();
+      updateFileName();
+    } catch (err) {
+      error.textContent = err.message;
+    }
+  });
+}
+
+async function initBookPage() {
+  try {
+    const auth = await loadAuthStatus();
+    buildNav(auth.user);
+  } catch {
+    // show page even if not logged in, but reading requires login to navigate back.
+  }
+  const logoutLink = document.getElementById('logout-link');
+  if (logoutLink) {
+    logoutLink.addEventListener('click', async (event) => {
+      event.preventDefault();
+      await request(api.logout, { method: 'POST' });
+      navigateTo('/login.html');
+    });
+  }
+  await loadBookDetails();
+}
+
+const path = window.location.pathname;
+if (path === '/') {
+  initIndex();
+} else if (path.endsWith('/login.html')) {
+  initLogin();
+} else if (path.endsWith('/register.html')) {
+  initRegister();
+} else if (path.endsWith('/admin.html')) {
+  initAdmin();
+} else if (path.endsWith('/book.html')) {
+  initBookPage();
+}

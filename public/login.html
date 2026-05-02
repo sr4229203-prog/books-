@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - BookHub</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header>
+    <div class="header-brand">
+      <p class="eyebrow">BookHub</p>
+      <h1>Welcome back</h1>
+    </div>
+    <nav><a href="/">Home</a> | <a href="/register.html">Register</a></nav>
+  </header>
+  <main>
+    <section class="page-panel">
+      <div class="panel-copy">
+        <h2>Sign in to continue</h2>
+        <p>Access the latest books and keep your reading list in one place.</p>
+      </div>
+      <form id="login-form" class="form-panel">
+        <label>Username<input type="text" name="username" required /></label>
+        <label>Password<input type="password" name="password" required /></label>
+        <button type="submit">Login</button>
+        <p id="login-error" class="error"></p>
+      </form>
+    </section>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>
