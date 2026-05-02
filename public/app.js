@@ -327,8 +327,15 @@ async function initBookPage() {
   initReadingSettings();
 
   const contentArea = document.getElementById('book-content');
+  const contentWrapper = document.querySelector('.book-content-wrapper');
+  if (contentWrapper) {
+    contentWrapper.classList.remove('fullscreen');
+  }
   contentArea.classList.remove('fullscreen');
   if (book.type === 'pdf' && book.fileUrl) {
+    if (contentWrapper) {
+      contentWrapper.classList.add('fullscreen');
+    }
     contentArea.classList.add('fullscreen');
     contentArea.innerHTML = `
       <div class="pdf-container">
