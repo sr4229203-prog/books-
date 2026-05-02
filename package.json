@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Simple full stack book reader app with admin upload and user reading features.",
   "main": "server.js",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "start": "node server.js"
   },
