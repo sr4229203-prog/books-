@@ -3,50 +3,55 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login - BookHub</title>
+  <title>Sign In - BookHub</title>
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body class="auth-page">
   <main class="auth-shell">
     <section class="auth-hero">
       <div class="auth-hero-content">
-        <span class="eyebrow">Secure access</span>
-        <h1>Welcome back to BookHub</h1>
-        <p>Sign in to continue reading your collection, manage uploads, and enjoy the premium reader experience.</p>
+        <p class="eyebrow">Welcome back</p>
+        <h1>Sign in to your account</h1>
+        <p>Access your library and continue reading where you left off.</p>
         <div class="auth-features">
           <div class="auth-feature-card">
             <strong>Fast login</strong>
-            <p>Sign in quickly and get straight to your books.</p>
+            <p>Sign in quickly and get back to reading.</p>
           </div>
           <div class="auth-feature-card">
-            <strong>Safe & secure</strong>
-            <p>Your session is protected with secure auth flow.</p>
+            <strong>Secure access</strong>
+            <p>Your account is protected with secure authentication.</p>
+          </div>
+          <div class="auth-feature-card">
+            <strong>Your library</strong>
+            <p>Access all your books and reading progress across devices.</p>
           </div>
         </div>
       </div>
     </section>
+
     <section class="auth-panel">
       <div class="auth-card">
         <div class="auth-card-header">
-          <p class="eyebrow">Member login</p>
-          <h2>Sign in to your account</h2>
+          <h2>Sign In</h2>
         </div>
         <form id="login-form" class="auth-form">
           <label>
-            <span>Username</span>
+            Username
             <input type="text" name="username" required placeholder="Enter your username" />
           </label>
           <label>
-            <span>Password</span>
+            Password
             <input type="password" name="password" required placeholder="Enter your password" />
           </label>
-          <button type="submit" class="button button-primary">Login</button>
-          <p class="form-footnote">Don’t have an account? <a href="/register.html">Create one</a>.</p>
+          <button type="submit" class="button button-primary">Sign In</button>
+          <p class="form-footnote">Don't have an account? <a href="/register.html">Create one</a></p>
           <p id="login-error" class="error"></p>
         </form>
       </div>
     </section>
   </main>
+
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="/app.js"></script>
 </body>

@@ -9,56 +9,84 @@
 <body>
   <header>
     <div class="header-brand">
-      <p class="eyebrow">Admin dashboard</p>
-      <h1>Upload new content</h1>
+      <h1>BookHub Admin</h1>
     </div>
-    <nav><a href="/">Home</a> | <a href="#" id="logout-link">Logout</a></nav>
+    <nav>
+      <a href="/">Home</a>
+      <a href="#" id="logout-link">Sign Out</a>
+    </nav>
   </header>
+
   <main>
-    <section class="page-panel admin-panel admin-advanced">
+    <section class="page-panel admin-advanced">
       <div class="panel-copy admin-sidebar">
-        <div class="admin-badge">Admin workspace</div>
-        <h2>Publish your next title</h2>
-        <p>Use the upload builder to publish PDFs, Excel books, or fresh text content. The experience is designed for speed, clarity, and visual comfort.</p>
+        <div class="admin-badge">Admin Workspace</div>
+        <h2>Upload New Content</h2>
+        <p>Publish your books in multiple formats. Support for PDFs, Excel files, and plain text content.</p>
+        
         <div class="admin-stats">
           <div>
-            <strong>Fast uploads</strong>
-            <p>Drag-and-drop support with progress feedback.</p>
+            <strong>Multiple Formats</strong>
+            <p>PDF, Excel, or text-based books all in one place.</p>
           </div>
           <div>
-            <strong>Backup safe</strong>
-            <p>Every upload is backed up automatically.</p>
+            <strong>Automatic Backup</strong>
+            <p>Every upload is backed up automatically for safety.</p>
+          </div>
+          <div>
+            <strong>Quick Upload</strong>
+            <p>Drag and drop support with real-time progress.</p>
           </div>
         </div>
       </div>
-      <div class="form-panel admin-form-panel">
-        <form id="book-form">
-          <div class="form-grid">
-            <label>Title<input type="text" name="title" required placeholder="Enter book title" /></label>
-            <label>Author<input type="text" name="author" required placeholder="Enter author name" /></label>
-          </div>
-          <label>Description<textarea name="description" rows="3" placeholder="Describe the book in a few words."></textarea></label>
+
+      <form id="book-form" class="form-panel">
+        <div class="form-grid">
+          <label>
+            Title
+            <input type="text" name="title" required placeholder="Enter book title" />
+          </label>
+          <label>
+            Author
+            <input type="text" name="author" required placeholder="Enter author name" />
+          </label>
+        </div>
+
+        <label>
+          Description
+          <textarea name="description" placeholder="Add a brief description of the book"></textarea>
+        </label>
+
+        <label>
+          Upload File (PDF, Excel)
           <div class="dropzone" id="file-dropzone">
+            <div class="dropzone-icon">📂</div>
+            <div class="dropzone-title">Drop your file here</div>
+            <div class="dropzone-subtitle">Supported formats: PDF, XLSX, XLS</div>
             <input type="file" name="file" id="file-input" accept=".pdf,.xls,.xlsx" />
-            <div class="dropzone-content">
-              <div class="dropzone-icon">📂</div>
-              <p class="dropzone-title">Drop a PDF or Excel file here</p>
-              <p class="dropzone-subtitle">Supported: .pdf, .xls, .xlsx</p>
-              <p class="dropzone-filename" id="dropzone-filename">No file selected</p>
-            </div>
+            <div class="dropzone-filename" id="dropzone-filename"></div>
           </div>
-          <label>Text content<textarea name="content" rows="10" placeholder="Leave empty if uploading a file."></textarea></label>
-          <p class="form-note">Tip: File uploads take priority. Text content becomes the reader view if no file is provided.</p>
-          <button type="submit" id="submit-btn">Publish Book</button>
-          <div id="upload-progress" class="progress-bar" style="display: none;">
-            <div class="progress-fill"></div>
-          </div>
-          <p id="book-error" class="error"></p>
-          <p id="book-success" class="success"></p>
-        </form>
-      </div>
+        </label>
+
+        <label>
+          Or Text Content
+          <textarea name="content" placeholder="Paste your book content here (leave empty if uploading a file)"></textarea>
+        </label>
+
+        <p class="form-note">Tip: File uploads take priority. If you upload a file, the text content will be ignored.</p>
+        
+        <button type="submit" id="submit-btn" class="button button-primary">Publish Book</button>
+
+        <div id="upload-progress" class="progress-bar" style="display: none;">
+          <div class="progress-fill"></div>
+        </div>
+
+        <p id="book-error" class="error"></p>
+        <p id="book-success" class="success"></p>
+      </form>
     </section>
   </main>
+
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="/app.js"></script>
 </body>

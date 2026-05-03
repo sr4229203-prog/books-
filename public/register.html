@@ -3,31 +3,55 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Register - BookHub</title>
+  <title>Create Account - BookHub</title>
   <link rel="stylesheet" href="/styles.css" />
 </head>
-<body>
-  <header>
-    <div class="header-brand">
-      <p class="eyebrow">BookHub</p>
-      <h1>Create your account</h1>
-    </div>
-    <nav><a href="/">Home</a> | <a href="/login.html">Login</a></nav>
-  </header>
-  <main>
-    <section class="page-panel">
-      <div class="panel-copy">
-        <h2>Join the reading community</h2>
-        <p>Register now to unlock books, save read progress, and use the reader experience.</p>
+<body class="auth-page">
+  <main class="auth-shell">
+    <section class="auth-hero">
+      <div class="auth-hero-content">
+        <p class="eyebrow">Get started</p>
+        <h1>Join BookHub</h1>
+        <p>Create your account and start building your personal library today.</p>
+        <div class="auth-features">
+          <div class="auth-feature-card">
+            <strong>Free to start</strong>
+            <p>No credit card required. Create an account in seconds.</p>
+          </div>
+          <div class="auth-feature-card">
+            <strong>Full control</strong>
+            <p>Upload and manage your own collection of books.</p>
+          </div>
+          <div class="auth-feature-card">
+            <strong>Your privacy</strong>
+            <p>Your books and reading progress stay private.</p>
+          </div>
+        </div>
       </div>
-      <form id="register-form" class="form-panel">
-        <label>Username<input type="text" name="username" required /></label>
-        <label>Password<input type="password" name="password" required /></label>
-        <button type="submit">Create account</button>
-        <p id="register-error" class="error"></p>
-      </form>
+    </section>
+
+    <section class="auth-panel">
+      <div class="auth-card">
+        <div class="auth-card-header">
+          <h2>Create Account</h2>
+        </div>
+        <form id="register-form" class="auth-form">
+          <label>
+            Username
+            <input type="text" name="username" required placeholder="Choose a username" />
+          </label>
+          <label>
+            Password
+            <input type="password" name="password" required placeholder="Create a password" />
+          </label>
+          <button type="submit" class="button button-primary">Create Account</button>
+          <p class="form-footnote">Already have an account? <a href="/login.html">Sign in</a></p>
+          <p id="register-error" class="error"></p>
+        </form>
+      </div>
     </section>
   </main>
+
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="/app.js"></script>
 </body>

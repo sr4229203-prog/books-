@@ -3,69 +3,71 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BookHub Reader</title>
+  <title>BookHub - Your Personal Library</title>
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
   <header>
     <div class="header-brand">
-      <p class="eyebrow">BookHub</p>
-      <h1>Elegant reading for modern readers.</h1>
+      <h1>BookHub</h1>
     </div>
-    <nav id="main-nav"></nav>
+    <nav id="main-nav">
+      <a href="#books">Browse</a>
+      <a href="/login.html">Sign In</a>
+    </nav>
   </header>
+  
   <main>
-    <section class="hero hero-modern">
+    <section class="hero">
       <div class="hero-copy">
-        <p class="eyebrow">Discover. Read. Publish.</p>
-        <h2>Build your personal library with a premium reading experience.</h2>
-        <p>Explore beautifully styled books, manage admin uploads, and enjoy a Kindle-inspired reader with themes, progress controls, and responsive layout.</p>
+        <p class="eyebrow">Discover. Read. Learn.</p>
+        <h2>Your personal library awaits</h2>
+        <p>Access your collection of books with a clean, distraction-free reading experience. Upload, organize, and read in comfort—just like Amazon Kindle.</p>
         <div class="hero-actions">
-          <a class="button button-primary" href="/login.html">Get started</a>
-          <a class="button button-secondary" href="/register.html">Create account</a>
+          <a class="button button-primary" href="/login.html">Sign In</a>
+          <a class="button button-secondary" href="/register.html">Create Free Account</a>
         </div>
       </div>
-      <div class="hero-visual hero-visual-advanced">
-        <div class="hero-card hero-card-top">
-          <span class="hero-chip">Trending</span>
-          <h3>Learn design, publish books, and discover readers.</h3>
-          <p>Upload PDF or Excel files, or create text-based books directly in the dashboard.</p>
+      <div class="hero-visual-advanced">
+        <div class="hero-card">
+          <span class="hero-chip">Simple</span>
+          <h3>Clean reading interface</h3>
+          <p>Minimal design focused on content. Adjust font size, themes, and line spacing for perfect comfort.</p>
         </div>
-        <div class="hero-card hero-card-bottom">
-          <span class="hero-chip">New Release</span>
-          <h3>Instant preview and elegant reader controls.</h3>
-          <p>Switch themes, resize text, and track reading progress seamlessly.</p>
+        <div class="hero-card">
+          <span class="hero-chip">Powerful</span>
+          <h3>Upload and share</h3>
+          <p>Support for PDFs, Excel files, and text content. Manage your library with ease.</p>
         </div>
       </div>
     </section>
 
-    <section class="feature-section feature-section-advanced">
+    <section class="feature-section-advanced">
       <div class="feature-grid">
-        <article class="feature-card">
-          <h3>Elegant reading flow</h3>
-          <p>Polished layouts, soft shadows, and premium readability for long sessions.</p>
-        </article>
-        <article class="feature-card">
-          <h3>Secure file backup</h3>
-          <p>Every upload is stored safely in both live and backup storage for peace of mind.</p>
-        </article>
-        <article class="feature-card">
-          <h3>Smart admin experience</h3>
-          <p>Modern upload controls, drag-and-drop support, and real-time feedback on uploads.</p>
-        </article>
+        <div class="feature-card">
+          <h3>Distraction-free reading</h3>
+          <p>Optimized typography and layout for hours of comfortable reading. Your books come first.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Multiple formats</h3>
+          <p>Read PDFs, Excel spreadsheets, or plain text. One platform for all your content.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Reading progress</h3>
+          <p>Track where you left off. Customize font sizes, colors, and spacing to your preference.</p>
+        </div>
       </div>
     </section>
 
     <section class="content-preview">
       <div class="section-heading">
-        <div>
-          <h3>Library snapshots</h3>
-          <p>Browse the latest titles in a card-based view designed for easy discovery.</p>
-        </div>
+        <h3>Featured titles</h3>
+        <p>Start exploring your library</p>
       </div>
-      <div id="books-list" class="book-grid book-grid-modern"></div>
+      <div id="books-list" class="book-grid-modern"></div>
     </section>
   </main>
+
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="/app.js"></script>
 </body>
