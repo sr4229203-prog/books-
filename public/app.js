@@ -368,13 +368,21 @@ function initReadingSettings() {
   const settingsBtn = document.getElementById('settings-btn');
   const settingsPanel = document.getElementById('reading-settings');
   const backBtn = document.getElementById('back-btn');
-  const tocBtn = document.getElementById('toc-btn');
   const fullscreenBtn = document.getElementById('fullscreen-btn');
 
   // Toggle settings panel
-  settingsBtn.addEventListener('click', () => {
-    settingsPanel.style.display = settingsPanel.style.display === 'none' ? 'block' : 'none';
-  });
+  if (settingsBtn && settingsPanel) {
+    settingsBtn.addEventListener('click', () => {
+      settingsPanel.style.display = settingsPanel.style.display === 'none' ? 'block' : 'none';
+    });
+
+    // Close settings when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.reading-settings') && !e.target.closest('#settings-btn')) {
+        settingsPanel.style.display = 'none';
+      }
+    });
+  }
 
   // Fullscreen toggle
   if (fullscreenBtn) {
@@ -402,16 +410,13 @@ function initReadingSettings() {
   }
 
   // Back button
-  backBtn.addEventListener('click', () => {
-    window.location.href = '/';
-  });
+  if (backBtn) {
+    backBtn.addEventListener('click', () => {
+      window.location.href = '/';
+    });
+  }
 
-  // TOC button (placeholder for now)
-  tocBtn.addEventListener('click', () => {
-    alert('Table of Contents feature coming soon!');
-  });
-
-  // Font size controls
+  // Font size controls with professional presets
   document.querySelectorAll('.size-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
@@ -422,10 +427,11 @@ function initReadingSettings() {
       if (size !== 'medium') {
         document.body.classList.add(`font-${size}`);
       }
+      localStorage.setItem('reading-font-size', size);
     });
   });
 
-  // Theme controls
+  // Theme controls - Light, Sepia, Dark
   document.querySelectorAll('.theme-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
@@ -433,7 +439,10 @@ function initReadingSettings() {
 
       const theme = btn.dataset.theme;
       document.body.classList.remove('theme-light', 'theme-sepia', 'theme-dark');
-      document.body.classList.add(`theme-${theme}`);
+      if (theme !== 'light') {
+        document.body.classList.add(`theme-${theme}`);
+      }
+      localStorage.setItem('reading-theme', theme);
     });
   });
 
@@ -448,8 +457,18 @@ function initReadingSettings() {
       if (spacing !== 'normal') {
         document.body.classList.add(`spacing-${spacing}`);
       }
+      localStorage.setItem('reading-line-spacing', spacing);
     });
   });
+
+  // Load saved preferences
+  const savedFontSize = localStorage.getItem('reading-font-size') || 'medium';
+  const savedTheme = localStorage.getItem('reading-theme') || 'light';
+  const savedSpacing = localStorage.getItem('reading-line-spacing') || 'normal';
+
+  document.querySelector(`.size-btn[data-size="${savedFontSize}"]`)?.click();
+  document.querySelector(`.theme-btn[data-theme="${savedTheme}"]`)?.click();
+  document.querySelector(`.spacing-btn[data-spacing="${savedSpacing}"]`)?.click();
 }
 
 function initTextReader() {
